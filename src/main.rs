@@ -1,32 +1,40 @@
 use rand::Rng;
-use std::io::{self, Write};
+use std::io;
 
-fn main() {
-    println!("Hello, world!");
+struct Grid {
+    data: [[u32; 9]; 9],
+}
 
-    // 生成ループ
-    let mut rng = rand::thread_rng();
-    for _ in 0..10 {
-        let random_number: u32 = rng.gen();
-        println!("Generated number: {}", random_number);
+impl Grid {
+    fn new() -> Self {
+        Grid { data: [[0; 9]; 9] }
     }
 
-    // モード設定
-    // tuiかなぁ
+    fn generate(&mut self) -> Result<(), &'static str> {
+        let mut rng = rand::thread_rng();
+        for i in 0..9 {
+            for j in 0..9 {
+                let random_number: u32 = rng.gen_range(1..10);
+                self.data[i][j] = random_number;
+            }
+        }
+        Ok(())
+    }
 
-    // 位置指定
-    let mut input = String::new();
-    println!("Enter position:");
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    println!("You entered: {}", input.trim());
+    fn display(&self) {
+        for row in &self.data {
+            for &num in row {
+                print!("{} ", num);
+            }
+            println!();
+        }
+    }
+}
 
-    // 入力値
-    input.clear();
-    println!("Enter value:");
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    println!("You entered: {}", input.trim());
+fn main() {
+    let mut grid = Grid::new();
+    match grid.generate() {
+        Ok(_) => grid.display(),
+        Err(_) => println!("破綻した"),
+    }
 }
