@@ -12,9 +12,19 @@ impl Grid {
     fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
         let mut random_number;
-        let mut regeneration_flag = false;
+        let mut re_random_flag = false;
+        let mut re_generate_flag = false;
+        let mut re_i_flag = false;
+        let mut re_j_flag = false;
+        let mut re_k_flag = false;
         for i in 0..9 {
             for j in 0..9 {
+                if re_generate_flag == true {
+                    break;
+                }
+                re_i_flag = false;
+                re_j_flag = false;
+                re_k_flag = false;
                 if cfg!(debug_assertions) {
                     println!("{}行{}列目の数字を生成します", i + 1, j + 1);
                 }
@@ -23,17 +33,18 @@ impl Grid {
                     if cfg!(debug_assertions) {
                         println!("乱数: {}", random_number);
                     }
-                    if regeneration_flag == true {
-                        regeneration_flag = false;
+                    if re_random_flag == true {
+                        re_random_flag = false;
+                        println!("再生成します。");
                         if cfg!(debug_assertions) {
-                            println!("再生成します。");
                             self.display();
                         }
                         continue;
                     }
                     for k in 0..9 {
                         if self.data[i][k] == random_number {
-                            regeneration_flag = true;
+                            re_random_flag = true;
+                            re_i_flag = true;
                             if cfg!(debug_assertions) {
                                 println!(
                                     "{}行{}列目の数字{}はすでに存在します",
@@ -50,7 +61,8 @@ impl Grid {
                             }
                         }
                         if self.data[k][j] == random_number {
-                            regeneration_flag = true;
+                            re_random_flag = true;
+                            re_j_flag = true;
                             if cfg!(debug_assertions) {
                                 println!(
                                     "{}行{}列目の数字{}はすでに存在します",
@@ -72,7 +84,8 @@ impl Grid {
                                 for l in 0..3 {
                                     for m in 0..3 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -94,7 +107,8 @@ impl Grid {
                                 for l in 0..3 {
                                     for m in 3..6 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -116,7 +130,8 @@ impl Grid {
                                 for l in 0..3 {
                                     for m in 6..9 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -140,7 +155,8 @@ impl Grid {
                                 for l in 3..6 {
                                     for m in 0..3 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -158,7 +174,8 @@ impl Grid {
                                 for l in 6..9 {
                                     for m in 0..3 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -174,7 +191,8 @@ impl Grid {
                                 for l in 6..9 {
                                     for m in 3..6 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -190,7 +208,8 @@ impl Grid {
                                 for l in 6..9 {
                                     for m in 6..9 {
                                         if self.data[l][m] == random_number {
-                                            regeneration_flag = true;
+                                            re_k_flag = true;
+                                            re_random_flag = true;
                                             if cfg!(debug_assertions) {
                                                 println!(
                                                     "{}行{}列目の数字{}はすでに存在します",
@@ -205,7 +224,17 @@ impl Grid {
                             }
                         }
                     }
-                    if regeneration_flag == false {
+                    if re_i_flag == true && re_j_flag == true
+                        || re_i_flag == true && re_k_flag == true
+                        || re_j_flag == true && re_k_flag == true
+                    {
+                        re_i_flag = false;
+                        re_j_flag = false;
+                        re_k_flag = false;
+                        re_generate_flag = true;
+                        continue;
+                    }
+                    if re_random_flag == false {
                         break;
                     }
                 }
@@ -222,10 +251,16 @@ impl Grid {
             if cfg!(debug_assertions) {
                 println!("{:?}行目の数字生成完了", i + 1);
             }
+            if re_generate_flag == true {
+                re_generate_flag = false;
+                println!("再生成します。");
+                if cfg!(debug_assertions) {
+                    self.display();
+                }
+                continue;
+            }
         }
-        if cfg!(debug_assertions) {
-            println!("数字生成完了");
-        }
+        println!("数字生成完了");
         Ok(())
     }
 
