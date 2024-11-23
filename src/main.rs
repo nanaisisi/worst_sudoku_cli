@@ -7,7 +7,7 @@ struct Grid {
 
 impl Grid {
     fn new() -> Self {
-        Grid { data: [[1; 9]; 9] }
+        Grid { data: [[0; 9]; 9] }
     }
 
     fn generate(&mut self) -> Result<(), &'static str> {
@@ -16,15 +16,12 @@ impl Grid {
             for j in 0..9 {
                 let mut available_numbers: HashSet<u32> = (1..=9).collect();
 
-                // 行と列の既存の数字を除外
-                for k in 0..9 {
-                    available_numbers.remove(&self.data[i][k]);
-                    available_numbers.remove(&self.data[k][j]);
+                while self.data[i].contains(&random_number)
+                    || self.data.iter().any(|row| row[j] == random_number)
+                {
+                    let random_number = rng.gen_range(1..=9);
+                    self.data[i][j] = random_number;
                 }
-
-                // 利用可能な数字からランダムに選択
-                let random_number = rng.gen_range(1..9);
-                self.data[i][j] = random_number;
             }
         }
         Ok(())
