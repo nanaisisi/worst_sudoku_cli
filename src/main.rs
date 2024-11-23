@@ -1,5 +1,4 @@
 use rand::Rng;
-use std::collections::HashSet;
 
 struct Grid {
     data: [[u32; 9]; 9],
@@ -14,8 +13,9 @@ impl Grid {
         let mut rng = rand::thread_rng();
         for i in 0..9 {
             for j in 0..9 {
-                let mut available_numbers: HashSet<u32> = (1..=9).collect();
-
+                // 利用可能な数字からランダムに選択
+                let random_number = rng.gen_range(1..9);
+                self.data[i][j] = random_number;
                 while self.data[i].contains(&random_number)
                     || self.data.iter().any(|row| row[j] == random_number)
                 {
