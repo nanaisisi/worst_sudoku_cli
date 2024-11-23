@@ -153,7 +153,7 @@ impl Grid {
                                     }
                                 }
                             }
-                        } else if i < 9 {
+                        } else {
                             if j < 3 {
                                 for l in 6..9 {
                                     for m in 0..3 {
