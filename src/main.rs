@@ -7,7 +7,7 @@ struct Grid {
 
 impl Grid {
     fn new() -> Self {
-        Grid { data: [[0; 9]; 9] }
+        Grid { data: [[1; 9]; 9] }
     }
 
     fn generate(&mut self) -> Result<(), &'static str> {
@@ -23,10 +23,7 @@ impl Grid {
                 }
 
                 // 利用可能な数字からランダムに選択
-                let random_number = *available_numbers
-                    .iter()
-                    .nth(rng.gen_range(0..available_numbers.len()))
-                    .unwrap();
+                let random_number = rng.gen_range(1..9);
                 self.data[i][j] = random_number;
             }
         }
