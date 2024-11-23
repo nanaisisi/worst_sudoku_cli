@@ -3,5 +3,11 @@ name = "rand_cli"
 version = "0.1.0"
 edition = "2021"
 
+[build.x86_64-pc-windows-msvc]
+rustc-wrapper = "sccache"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-Zlinker-features=-lld"]
+
 [dependencies]
 rand = "0.8.5"

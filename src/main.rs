@@ -13,15 +13,20 @@ impl Grid {
         let mut rng = rand::thread_rng();
         for i in 0..9 {
             for j in 0..9 {
-                // 利用可能な数字からランダムに選択
-                let random_number = rng.gen_range(1..9);
-                self.data[i][j] = random_number;
+                println!("{}行{}列目の数字を生成します", i + 1, j + 1);
+                let mut random_number = rng.gen_range(1..=9);
                 while self.data[i].contains(&random_number)
                     || self.data.iter().any(|row| row[j] == random_number)
                 {
-                    let random_number = rng.gen_range(1..=9);
-                    self.data[i][j] = random_number;
+                    random_number = rng.gen_range(1..=9);
                 }
+                self.data[i][j] = random_number;
+                println!(
+                    "{}行{}列目の数字{}を生成しました",
+                    i + 1,
+                    j + 1,
+                    self.data[i][j]
+                );
             }
         }
         Ok(())
@@ -41,6 +46,6 @@ fn main() {
     let mut grid = Grid::new();
     match grid.generate() {
         Ok(_) => grid.display(),
-        Err(_) => println!("破綻した"),
+        Err(e) => println!("破綻した: {}", e),
     }
 }
