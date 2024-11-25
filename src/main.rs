@@ -9,6 +9,12 @@ impl Grid {
         Grid { data: [[0; 9]; 9] }
     }
 
+    fn z_for(for_range_min: u8, for_range_max: u8, alpha: u8, bravo: u8) {
+        for i in for_range_min..for_range_max {
+            Self.data[alpha] = Self.data[bravo];
+        }
+    }
+
     fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
         let mut random_number;
