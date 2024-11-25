@@ -221,9 +221,6 @@ impl Grid {
                                     }
                                 }
                             }
-                            if re_random_flag == true {
-                                break;
-                            }
                         }
                         if re_i_flag == true && re_j_flag == true
                             || re_i_flag == true && re_k_flag == true
@@ -237,34 +234,38 @@ impl Grid {
                             self.data = [[0; 9]; 9];
                             continue;
                         }
-                        self.data[i][j] = random_number;
-                        if cfg!(debug_assertions) {
-                            println!(
-                                "{}行{}列目の数字{}を生成しました",
-                                i + 1,
-                                j + 1,
-                                self.data[i][j]
-                            );
-                        }
-                        if cfg!(debug_assertions) {
-                            println!("{:?}行目の数字生成完了", i + 1);
-                        }
-                        if re_generate_flag == true {
-                            println!("完全に再生成します。");
-                            if cfg!(debug_assertions) {
-                                self.display();
-                            }
+                        if re_random_flag == false {
                             break;
                         }
-                        if re_generate_flag == true {
-                            break;
-                        }
-                        break;
                     }
-                    println!("数字生成完了");
+                    self.data[i][j] = random_number;
+                    if cfg!(debug_assertions) {
+                        println!(
+                            "{}行{}列目の数字{}を生成しました",
+                            i + 1,
+                            j + 1,
+                            self.data[i][j]
+                        );
+                    }
+                }
+                if cfg!(debug_assertions) {
+                    println!("{:?}行目の数字生成完了", i + 1);
+                }
+                if re_generate_flag == true {
+                    println!("完全に再生成します。");
+                    if cfg!(debug_assertions) {
+                        self.display();
+                    }
+                    break;
                 }
             }
+            if re_generate_flag == true {
+                continue;
+            }
+            break;
         }
+        println!("数字生成完了");
+        Ok(())
     }
 
     fn display(&self) {
