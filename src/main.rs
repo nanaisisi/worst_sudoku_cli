@@ -23,9 +23,6 @@ impl Grid {
                     if re_generate_flag == true {
                         break;
                     }
-                    re_i_flag = false;
-                    re_j_flag = false;
-                    re_k_flag = false;
                     if cfg!(debug_assertions) {
                         println!("{}行{}列目の数字を生成します", i + 1, j + 1);
                     }
@@ -228,6 +225,7 @@ impl Grid {
                         if re_i_flag == true && re_j_flag == true
                             || re_i_flag == true && re_k_flag == true
                             || re_j_flag == true && re_k_flag == true
+                            || re_i_flag == true && re_j_flag == true && re_k_flag == true
                         {
                             re_i_flag = false;
                             re_j_flag = false;
