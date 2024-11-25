@@ -9,11 +9,30 @@ impl Grid {
         Grid { data: [[0; 9]; 9] }
     }
 
-    fn z_for(for_range_min: u8, for_range_max: u8, alpha: u8, bravo: u8) {
+    fn z_for(for_range_min: u8, for_range_max: u8, vertex: u8, bottom: u8, twist : u8){
         for i in for_range_min..for_range_max {
-            Self.data[alpha] = Self.data[bravo];
-        }
+            z_if();
     }
+};
+
+    fn z_if(vertex: u8){if self.data[vertex][k] == random_number {
+        re_random_flag = true;
+        re_i_flag = true;
+        if cfg!(debug_assertions) {
+            println!(
+                "{}行{}列目の数字{}はすでに存在します",
+                vertex + 1,
+                bottom + 1,
+                random_number
+            );
+            println!(
+                "{}行{}列目の{}が重複しているため再生成します",
+                vertex + 1,
+                twist + 1,
+                random_number
+            );
+        }
+    }};
 
     fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
