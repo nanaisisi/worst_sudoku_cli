@@ -259,14 +259,13 @@ impl Grid {
                     }
                     break;
                 }
+                if re_generate_flag == true {
+                    continue;
+                }
+                break;
             }
-            if re_generate_flag == true {
-                continue;
-            }
-            break;
+            println!("数字生成完了");
         }
-        println!("数字生成完了");
-        Ok(())
     }
 
     fn display(&self) {
