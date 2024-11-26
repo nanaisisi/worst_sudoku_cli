@@ -60,13 +60,13 @@ impl Grid {
                                 re_i_flag = true;
                                 if cfg!(debug_assertions) {
                                     println!(
-                                        "{}行{}列目の数字{}はすでに存在します",
+                                        "{}行目チェック{}列目の数字{}はすでに存在します",
                                         i + 1,
                                         j + 1,
                                         random_number
                                     );
                                     println!(
-                                        "{}行{}列目の{}が重複しているため再生成します",
+                                        "{}行目チェック{}列目の{}が重複しているため再生成します",
                                         i + 1,
                                         k + 1,
                                         random_number
@@ -79,236 +79,273 @@ impl Grid {
                                 re_j_flag = true;
                                 if cfg!(debug_assertions) {
                                     println!(
-                                        "{}行{}列目の数字{}はすでに存在します",
-                                        i + 1,
+                                        "{}列目チェック{}行目の数字{}はすでに存在します",
                                         j + 1,
+                                        i + 1,
                                         random_number
                                     );
                                     println!(
-                                        "{}行{}列目の{}が重複しているため再生成します",
+                                        "{}列目チェック{}行目の{}が重複しているため再生成します",
                                         k + 1,
                                         j + 1,
                                         random_number
                                     );
                                 }
                             }
-                            // 3x3のブロック内での重複チェック
-                            // 1-3行目
-                            if i < 3 {
-                                // 1-3列目
-                                // 1-1ブロック
-                                if j < 3 {
-                                    for l in 0..3 {
-                                        for m in 0..3 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
+                        }
+                        // 3x3のブロック内での重複チェック
+                        // 1-3行目
+                        if i < 3 {
+                            // 1-3列目
+                            // 1-1ブロック
+                            if j < 3 {
+                                for l in 0..3 {
+                                    for m in 0..3 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "1-1ブロックチェック{}行目{}列目の数字{}はすでに存在します",
                                                         i + 1,
                                                         j + 1,
                                                         random_number
                                                     );
-                                                    println!(
-                                                    "{}行{}列目の{}が重複しているため再生成します",
+                                                println!(
+                                                    "1-1ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
                                                     l + 1,
                                                     m + 1,
                                                     random_number
                                                 );
-                                                }
                                             }
                                         }
                                     }
+                                }
 
-                                    // 3-6列目
-                                    // 2-1ブロック
-                                } else if 2 < j && j < 6 {
-                                    for l in 0..3 {
-                                        for m in 3..6 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
-                                                        i + 1,
-                                                        j + 1,
-                                                        random_number
-                                                    );
-                                                    println!(
-                                                    "{}行{}列目の{}が重複しているため再生成します",
-                                                    l + 1,
-                                                    m + 1,
-                                                    random_number
-                                                );
-                                                }
-                                            }
-                                        }
-                                    }
-                                    // 6-9列目
-                                    // 3-1ブロック
-                                } else if 5 < j {
-                                    for l in 0..3 {
-                                        for m in 6..9 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
-                                                        i + 1,
-                                                        j + 1,
-                                                        random_number
-                                                    );
-                                                    println!(
-                                                    "{}行{}列目の{}が重複しているため再生成します",
-                                                    l + 1,
-                                                    m + 1,
-                                                    random_number
-                                                );
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                // 4-6行目
-                            } else if 2 < i && i < 6 {
-                                // 1-3列目
+                                // 3-6列目
                                 // 1-2ブロック
-                                if j < 3 {
-                                    for l in 3..6 {
-                                        for m in 0..3 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
+                            } else if 2 < j && j < 6 {
+                                for l in 0..3 {
+                                    for m in 3..6 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "1-2ブロックチェック{}行目{}列目の数字{}はすでに存在します",
                                                         i + 1,
                                                         j + 1,
                                                         random_number
                                                     );
-                                                }
+                                                println!(
+                                                    "1-2ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                    l + 1,
+                                                    m + 1,
+                                                    random_number
+                                                );
                                             }
                                         }
                                     }
                                 }
-                                // 3-6列目
-                                // 2-2ブロック
-                                else if 2 < j && j < 6 {
-                                    for l in 3..6 {
-                                        for m in 3..6 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
-                                                        i + 1,
-                                                        j + 1,
-                                                        random_number
-                                                    );
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                // 7-9列目
-                                // 3-2ブロック
-                                else if 5 < j {
-                                    for l in 3..6 {
-                                        for m in 6..9 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
-                                                        i + 1,
-                                                        j + 1,
-                                                        random_number
-                                                    );
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                // 7-9行目
-                            } else if 5 < i && i < 9 {
-                                // 1-3列目
+                                // 6-9列目
                                 // 1-3ブロック
-                                if j < 3 {
-                                    for l in 6..9 {
-                                        for m in 0..3 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
+                            } else if 5 < j {
+                                for l in 0..3 {
+                                    for m in 6..9 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "1-3ブロックチェック{}行目{}列目の数字{}はすでに存在します",
                                                         i + 1,
                                                         j + 1,
                                                         random_number
                                                     );
-                                                }
+                                                println!(
+                                                    "1-3ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                    l + 1,
+                                                    m + 1,
+                                                    random_number
+                                                );
                                             }
                                         }
                                     }
                                 }
-                                // 3-6列目
-                                // 2-3ブロック
-                                else if 2 < j && j < 6 {
-                                    for l in 6..9 {
-                                        for m in 3..6 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
+                            }
+                            // 4-6行目
+                        } else if 2 < i && i < 6 {
+                            // 1-3列目
+                            // 2-1ブロック
+                            if j < 3 {
+                                for l in 3..6 {
+                                    for m in 0..3 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "2-1ブロックチェック{}行目{}列目の数字{}はすでに存在します",
                                                         i + 1,
                                                         j + 1,
                                                         random_number
                                                     );
-                                                }
+                                                println!(
+                                                        "2-1ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
                                             }
                                         }
                                     }
                                 }
-                                // 7-9列目
-                                else if 5 < j {
-                                    for l in 6..9 {
-                                        for m in 6..9 {
-                                            if self.data[l][m] == random_number {
-                                                if re_i_flag == false && re_j_flag == false {
-                                                    re_block_flag = true;
-                                                }
-                                                re_random_flag = true;
-                                                if cfg!(debug_assertions) {
-                                                    println!(
-                                                        "{}行{}列目の数字{}はすでに存在します",
+                            }
+                            // 3-6列目
+                            // 2-2ブロック
+                            else if 2 < j && j < 6 {
+                                for l in 3..6 {
+                                    for m in 3..6 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "2-2ブロックチェック{}行目{}列目の数字{}はすでに存在します",
                                                         i + 1,
                                                         j + 1,
                                                         random_number
                                                     );
-                                                }
+                                                println!(
+                                                        "2-2ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // 7-9列目
+                            // 2-3ブロック
+                            else if 5 < j {
+                                for l in 3..6 {
+                                    for m in 6..9 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "2-3ブロックチェック{}行目{}列目の数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                println!(
+                                                        "2-3ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // 7-9行目
+                        } else if 5 < i {
+                            // 1-3列目
+                            // 3-1ブロック
+                            if j < 3 {
+                                for l in 6..9 {
+                                    for m in 0..3 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "3-1ブロックチェック{}行目{}列目のの数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                println!(
+                                                        "3-1ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // 3-6列目
+                            // 3-2ブロック
+                            else if 2 < j && j < 6 {
+                                for l in 6..9 {
+                                    for m in 3..6 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "3-2ブロックチェック{}行目{}列目の数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                println!(
+                                                        "3-2ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // 7-9列目
+                            // 3-3ブロック
+                            else if 5 < j {
+                                for l in 6..9 {
+                                    for m in 6..9 {
+                                        if self.data[l][m] == random_number {
+                                            if re_i_flag == false && re_j_flag == false {
+                                                re_block_flag = true;
+                                            }
+                                            re_random_flag = true;
+                                            if cfg!(debug_assertions) {
+                                                println!(
+                                                        "3-3ブロックチェック{}行目{}列目の数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                println!(
+                                                        "3-3ブロックチェック{}行目{}列目の{}が重複しているため再生成します",
+                                                        l + 1,
+                                                        m + 1,
+                                                        random_number
+                                                    );
                                             }
                                         }
                                     }
