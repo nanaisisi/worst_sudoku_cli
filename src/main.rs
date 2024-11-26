@@ -1,4 +1,6 @@
 use rand::Rng;
+use std::thread;
+use std::time::Duration;
 
 struct Grid {
     data: [[u32; 9]; 9],
@@ -27,6 +29,7 @@ impl Grid {
                         println!("{}行{}列目の数字を生成します", i + 1, j + 1);
                     }
                     loop {
+                        thread::sleep(Duration::from_millis(500));
                         random_number = rng.gen_range(1..10);
                         if cfg!(debug_assertions) {
                             println!("乱数: {}", random_number);
@@ -252,6 +255,7 @@ impl Grid {
                     println!("{:?}行目の数字生成完了", i + 1);
                 }
                 if re_generate_flag == true {
+                    re_generate_flag = false;
                     println!("完全に再生成します。");
                     if cfg!(debug_assertions) {
                         self.display();
