@@ -18,7 +18,7 @@ impl Grid {
         let mut re_generate_flag = false;
         let mut re_i_flag = false;
         let mut re_j_flag = false;
-        let mut re_k_flag = false;
+        let mut re_block_flag = false;
         loop {
             for i in 0..9 {
                 for j in 0..9 {
@@ -32,7 +32,7 @@ impl Grid {
                         dbg!(
                             re_i_flag,
                             re_j_flag,
-                            re_k_flag,
+                            re_block_flag,
                             re_generate_flag,
                             re_random_flag
                         );
@@ -46,7 +46,7 @@ impl Grid {
                             re_generate_flag = false;
                             re_i_flag = false;
                             re_j_flag = false;
-                            re_k_flag = false;
+                            re_block_flag = false;
                             println!("再生成します。");
                             if cfg!(debug_assertions) {
                                 self.display();
@@ -54,6 +54,7 @@ impl Grid {
                             continue;
                         }
                         for k in 0..9 {
+                            // 同じ行に同じ数字があるかチェック
                             if self.data[i][k] == random_number {
                                 re_random_flag = true;
                                 re_i_flag = true;
@@ -72,6 +73,7 @@ impl Grid {
                                     );
                                 }
                             }
+                            // 同じ列に同じ数字があるかチェック
                             if self.data[k][j] == random_number {
                                 re_random_flag = true;
                                 re_j_flag = true;
@@ -91,13 +93,16 @@ impl Grid {
                                 }
                             }
                             // 3x3のブロック内での重複チェック
+                            // 1-3行目
                             if i < 3 {
+                                // 1-3列目
+                                // 1-1ブロック
                                 if j < 3 {
                                     for l in 0..3 {
                                         for m in 0..3 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -117,12 +122,15 @@ impl Grid {
                                             }
                                         }
                                     }
-                                } else if j < 6 {
+
+                                    // 3-6列目
+                                    // 2-1ブロック
+                                } else if 2 < j && j < 6 {
                                     for l in 0..3 {
                                         for m in 3..6 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -142,12 +150,14 @@ impl Grid {
                                             }
                                         }
                                     }
-                                } else {
+                                    // 6-9列目
+                                    // 3-1ブロック
+                                } else if 5 < j {
                                     for l in 0..3 {
                                         for m in 6..9 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -168,13 +178,16 @@ impl Grid {
                                         }
                                     }
                                 }
-                            } else if i < 6 {
+                                // 4-6行目
+                            } else if 2 < i && i < 6 {
+                                // 1-3列目
+                                // 1-2ブロック
                                 if j < 3 {
                                     for l in 3..6 {
                                         for m in 0..3 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -189,13 +202,60 @@ impl Grid {
                                         }
                                     }
                                 }
-                            } else {
+                                // 3-6列目
+                                // 2-2ブロック
+                                else if 2 < j && j < 6 {
+                                    for l in 3..6 {
+                                        for m in 3..6 {
+                                            if self.data[l][m] == random_number {
+                                                if re_i_flag == false && re_j_flag == false {
+                                                    re_block_flag = true;
+                                                }
+                                                re_random_flag = true;
+                                                if cfg!(debug_assertions) {
+                                                    println!(
+                                                        "{}行{}列目の数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // 7-9列目
+                                // 3-2ブロック
+                                else if 5 < j {
+                                    for l in 3..6 {
+                                        for m in 6..9 {
+                                            if self.data[l][m] == random_number {
+                                                if re_i_flag == false && re_j_flag == false {
+                                                    re_block_flag = true;
+                                                }
+                                                re_random_flag = true;
+                                                if cfg!(debug_assertions) {
+                                                    println!(
+                                                        "{}行{}列目の数字{}はすでに存在します",
+                                                        i + 1,
+                                                        j + 1,
+                                                        random_number
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // 7-9行目
+                            } else if 5 < i && i < 9 {
+                                // 1-3列目
+                                // 1-3ブロック
                                 if j < 3 {
                                     for l in 6..9 {
                                         for m in 0..3 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -209,12 +269,15 @@ impl Grid {
                                             }
                                         }
                                     }
-                                } else if j < 6 {
+                                }
+                                // 3-6列目
+                                // 2-3ブロック
+                                else if 2 < j && j < 6 {
                                     for l in 6..9 {
                                         for m in 3..6 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -228,12 +291,14 @@ impl Grid {
                                             }
                                         }
                                     }
-                                } else {
+                                }
+                                // 7-9列目
+                                else if 5 < j {
                                     for l in 6..9 {
                                         for m in 6..9 {
                                             if self.data[l][m] == random_number {
                                                 if re_i_flag == false && re_j_flag == false {
-                                                    re_k_flag = true;
+                                                    re_block_flag = true;
                                                 }
                                                 re_random_flag = true;
                                                 if cfg!(debug_assertions) {
@@ -251,29 +316,29 @@ impl Grid {
                             }
                         }
                         if re_i_flag == true && re_j_flag == true
-                            || re_i_flag == true && re_k_flag == true
-                            || re_j_flag == true && re_k_flag == true
+                            || re_i_flag == true && re_block_flag == true
+                            || re_j_flag == true && re_block_flag == true
                         {
                             dbg!(
                                 re_i_flag,
                                 re_j_flag,
-                                re_k_flag,
+                                re_block_flag,
                                 re_generate_flag,
                                 re_random_flag
                             );
                             re_i_flag = false;
                             re_j_flag = false;
-                            re_k_flag = false;
+                            re_block_flag = false;
                             re_random_flag = false;
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
                             continue;
                         }
-                        if re_random_flag == false && re_generate_flag == false {
+                        if re_random_flag == false {
                             dbg!(
                                 re_i_flag,
                                 re_j_flag,
-                                re_k_flag,
+                                re_block_flag,
                                 re_generate_flag,
                                 re_random_flag
                             );
@@ -306,7 +371,7 @@ impl Grid {
                 dbg!(
                     re_i_flag,
                     re_j_flag,
-                    re_k_flag,
+                    re_block_flag,
                     re_generate_flag,
                     re_random_flag
                 );
