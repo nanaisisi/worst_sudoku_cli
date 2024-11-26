@@ -36,7 +36,6 @@ impl Grid {
                             re_generate_flag,
                             re_random_flag
                         );
-                        thread::sleep(Duration::from_millis(500));
                         random_number = rng.gen_range(1..10);
                         if cfg!(debug_assertions) {
                             println!("乱数: {}", random_number);
@@ -251,15 +250,9 @@ impl Grid {
                                 }
                             }
                         }
-                        if re_random_flag == true {
-                            re_i_flag = false;
-                            re_j_flag = false;
-                            re_k_flag = false;
-                        }
                         if re_i_flag == true && re_j_flag == true
                             || re_i_flag == true && re_k_flag == true
                             || re_j_flag == true && re_k_flag == true
-                            || re_i_flag == true && re_j_flag == true && re_random_flag == true
                         {
                             dbg!(
                                 re_i_flag,
@@ -271,11 +264,12 @@ impl Grid {
                             re_i_flag = false;
                             re_j_flag = false;
                             re_k_flag = false;
+                            re_random_flag = false;
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
                             continue;
                         }
-                        if re_random_flag == false {
+                        if re_random_flag == false && re_generate_flag == false {
                             dbg!(
                                 re_i_flag,
                                 re_j_flag,
