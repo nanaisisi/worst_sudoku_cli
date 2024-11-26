@@ -369,7 +369,7 @@ impl Grid {
                             re_random_flag = false;
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
-                            continue;
+                            break;
                         }
                         if re_random_flag == false {
                             dbg!(
