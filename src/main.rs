@@ -255,6 +255,7 @@ impl Grid {
                     println!("{:?}行目の数字生成完了", i + 1);
                 }
                 if re_generate_flag == true {
+                    dbg!(re_generate_flag);
                     println!("完全に再生成します。");
                     if cfg!(debug_assertions) {
                         self.display();
