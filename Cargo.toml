@@ -1,5 +1,5 @@
 [package]
-name = "rand_cli"
+name = "worst_sudoku_cli"
 version = "0.1.0"
 edition = "2021"
 
