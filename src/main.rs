@@ -36,6 +36,7 @@ impl Grid {
                             re_generate_flag,
                             re_random_flag
                         );
+                        // thread::sleep(Duration::from_millis(500));
                         random_number = rng.gen_range(1..10);
                         if cfg!(debug_assertions) {
                             println!("乱数: {}", random_number);
