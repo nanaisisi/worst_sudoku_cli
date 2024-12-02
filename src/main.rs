@@ -1,6 +1,6 @@
 use rand::Rng;
-use std::thread;
-use std::time::Duration;
+// use std::thread;
+// use std::time::Duration;
 
 struct Grid {
     data: [[u32; 9]; 9],
