@@ -3,7 +3,7 @@ use rand::Rng;
 // use std::time::Duration;
 
 struct Grid {
-    data: [[u32; 9]; 9],
+    data: [[u8; 9]; 9],
 }
 
 impl Grid {
@@ -13,6 +13,7 @@ impl Grid {
 
     fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
+        let mut number_chk;
         let mut random_number;
         let mut re_random_flag = false;
         let mut re_generate_flag = false;
@@ -29,6 +30,10 @@ impl Grid {
                         println!("{}行{}列目の数字を生成します", i + 1, j + 1);
                     }
                     loop {
+                        number_chk = self.get_related_numbers(i, j);
+                        if self.contains_all_numbers(&number_chk) {
+                            re_generate_flag = true;
+                        }
                         dbg!(
                             re_i_flag,
                             re_j_flag,
@@ -370,16 +375,16 @@ impl Grid {
                             re_random_flag = false;
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
-                            break;
+                            continue;
                         }
+                        dbg!(
+                            re_i_flag,
+                            re_j_flag,
+                            re_block_flag,
+                            re_generate_flag,
+                            re_random_flag
+                        );
                         if re_random_flag == false {
-                            dbg!(
-                                re_i_flag,
-                                re_j_flag,
-                                re_block_flag,
-                                re_generate_flag,
-                                re_random_flag
-                            );
                             break;
                         }
                     }
@@ -421,6 +426,31 @@ impl Grid {
         }
         println!("数字生成完了");
         Ok(())
+    }
+
+    fn get_related_numbers(&self, row: usize, col: usize) -> Vec<u8> {
+        let mut numbers = Vec::new();
+        // 同じ行の数字を追加
+        for j in 0..9 {
+            numbers.push(self.data[row][j]);
+        }
+        // 同じ列の数字を追加
+        for i in 0..9 {
+            numbers.push(self.data[i][col]);
+        }
+        // 同じブロックの数字を追加
+        let block_row = (row / 3) * 3;
+        let block_col = (col / 3) * 3;
+        for i in 0..3 {
+            for j in 0..3 {
+                numbers.push(self.data[block_row + i][block_col + j]);
+            }
+        }
+        numbers
+    }
+
+    fn contains_all_numbers(&self, numbers: &[u8]) -> bool {
+        (1..=9).all(|n| numbers.contains(&n))
     }
 
     fn display(&self) {
