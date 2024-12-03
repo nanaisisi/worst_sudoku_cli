@@ -30,10 +30,6 @@ impl Grid {
                         println!("{}行{}列目の数字を生成します", i + 1, j + 1);
                     }
                     loop {
-                        number_chk = self.get_related_numbers(i, j);
-                        if self.contains_all_numbers(&number_chk) {
-                            re_generate_flag = true;
-                        }
                         dbg!(
                             re_i_flag,
                             re_j_flag,
@@ -58,6 +54,10 @@ impl Grid {
                                 self.display();
                             }
                             continue;
+                        }
+                        number_chk = self.get_related_numbers(i, j);
+                        if self.contains_all_numbers(&number_chk) {
+                            re_generate_flag = true;
                         }
                         for k in 0..9 {
                             // 同じ行に同じ数字があるかチェック
