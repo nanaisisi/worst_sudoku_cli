@@ -24,6 +24,9 @@ impl Grid {
             for i in 0..9 {
                 for j in 0..9 {
                     if re_generate_flag == true {
+                        if cfg!(debug_assertions) {
+                            println!("再生成しますi");
+                        };
                         break;
                     }
                     if cfg!(debug_assertions) {
@@ -406,6 +409,7 @@ impl Grid {
                     println!("完全に再生成します。");
                     if cfg!(debug_assertions) {
                         self.display();
+                        println!("再生成j");
                     }
                     break;
                 }
@@ -420,6 +424,9 @@ impl Grid {
                 );
                 re_generate_flag = false;
                 self.data = [[0; 9]; 9];
+                if cfg!(debug_assertions) {
+                    println!("再生成完了");
+                }
                 continue;
             }
             break;
