@@ -46,6 +46,28 @@ impl Grid {
                             println!("乱数: {}", random_number);
                             self.display();
                         }
+                        if re_i_flag == true && re_j_flag == true
+                            || re_i_flag == true && re_block_flag == true
+                            || re_j_flag == true && re_block_flag == true
+                        {
+                            dbg!(
+                                re_i_flag,
+                                re_j_flag,
+                                re_block_flag,
+                                re_generate_flag,
+                                re_random_flag
+                            );
+                            re_i_flag = false;
+                            re_j_flag = false;
+                            re_block_flag = false;
+                            re_random_flag = false;
+                            re_generate_flag = true;
+                            self.data = [[0; 9]; 9];
+                            if cfg!(debug_assertions) {
+                                println!("完全に再生成します。f");
+                            };
+                            continue;
+                        }
                         if re_random_flag == true {
                             re_random_flag = false;
                             re_generate_flag = false;
@@ -378,6 +400,9 @@ impl Grid {
                             re_random_flag = false;
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
+                            if cfg!(debug_assertions) {
+                                println!("完全に再生成します。f");
+                            };
                             continue;
                         }
                         dbg!(
