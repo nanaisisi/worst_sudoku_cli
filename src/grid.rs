@@ -7,11 +7,11 @@ pub struct Grid {
 }
 
 impl Grid {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Grid { data: [[0; 9]; 9] }
     }
 
-    fn generate(&mut self) -> Result<(), &'static str> {
+    pub fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
         let mut number_chk;
         let mut random_number;
@@ -481,11 +481,11 @@ impl Grid {
         numbers
     }
 
-    fn contains_all_numbers(&self, numbers: &[u8]) -> bool {
+    pub fn contains_all_numbers(&self, numbers: &[u8]) -> bool {
         (1..=9).all(|n| numbers.contains(&n))
     }
 
-    fn display(&self) {
+    pub fn display(&self) {
         for row in &self.data {
             for &num in row {
                 print!("{} ", num);
