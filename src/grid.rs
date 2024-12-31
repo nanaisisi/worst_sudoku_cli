@@ -2,16 +2,24 @@ use rand::Rng;
 // use std::thread;
 // use std::time::Duration;
 
-pub struct Grid {
+pub fn grid_run() {
+    let mut grid = Grid::new();
+    match grid.generate() {
+        Ok(_) => grid.display(),
+        Err(e) => println!("破綻した: {}", e),
+    }
+}
+
+struct Grid {
     data: [[u8; 9]; 9],
 }
 
 impl Grid {
-    pub fn new() -> Self {
+    fn new() -> Self {
         Grid { data: [[0; 9]; 9] }
     }
 
-    pub fn generate(&mut self) -> Result<(), &'static str> {
+    fn generate(&mut self) -> Result<(), &'static str> {
         let mut rng = rand::thread_rng();
         let mut number_chk;
         let mut random_number;
@@ -64,7 +72,7 @@ impl Grid {
                             re_generate_flag = true;
                             self.data = [[0; 9]; 9];
                             if cfg!(debug_assertions) {
-                                println!("完全に再生成します。f");
+                                println!("完全に再生成しますf");
                             };
                             continue;
                         }
@@ -74,7 +82,7 @@ impl Grid {
                             re_i_flag = false;
                             re_j_flag = false;
                             re_block_flag = false;
-                            println!("再生成します。");
+                            println!("再生成します");
                             if cfg!(debug_assertions) {
                                 self.display();
                             }
